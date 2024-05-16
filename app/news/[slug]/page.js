@@ -1,9 +1,15 @@
+import { notFound } from "next/navigation.js";
+
 import { DUMMY_NEWS } from "@/dummy-news.js";
 
 export default function NewsDetailsPage({ params }) {
 
     const slug = params.slug;
     const newsItem = DUMMY_NEWS.find(i => i.slug === slug);
+
+    if(!newsItem){
+        notFound();
+    }
 
     return (
         <article className="news-article">
