@@ -28,7 +28,7 @@ export function getAvailableNewsMonths(year) {
       }
     }
     return months;
-  }, []).sort((a, b) => b - a);
+  }, []);
 }
 
 export function getNewsForYear(year) {
