@@ -1,3 +1,4 @@
+import Link from "next/link.js";
 import { notFound } from "next/navigation.js";
 
 import { DUMMY_NEWS } from "@/dummy-news.js";
@@ -7,14 +8,16 @@ export default function NewsDetailsPage({ params }) {
     const slug = params.slug;
     const newsItem = DUMMY_NEWS.find(i => i.slug === slug);
 
-    if(!newsItem){
+    if (!newsItem) {
         notFound();
     }
 
     return (
         <article className="news-article">
             <header>
-                <img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
+                <Link href={`/news/${slug}/image`}>
+                    <img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
+                </Link>
                 <h1>{newsItem.title}</h1>
                 <time dateTime={newsItem.date}>{newsItem.date}</time>
             </header>
