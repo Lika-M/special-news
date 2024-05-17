@@ -23,9 +23,15 @@ export default function FilteredNewsPage({ params }) {
         news = getNewsForYearAndMonth(year, month);
         links = [];
     }
-    
+
     if (news && news.length > 0) {
         contentNews = <NewsList news={news} />
+    }
+
+    if ((year && !getAvailableNewsYears().includes(Number(year))) ||
+        (month && !getAvailableNewsMonths(year).includes(Number(month))) ||
+        filter.length > 2) {
+        throw new Error('Invalid path.');
     }
 
     return (
