@@ -30,7 +30,7 @@ export default function FilteredNewsPage({ params }) {
 
     if ((year && !getAvailableNewsYears().includes(Number(year))) ||
         (month && !getAvailableNewsMonths(year).includes(Number(month))) ||
-        filter.length > 2) {
+        (filter && filter.length > 2)) {
         throw new Error('Invalid path.');
     }
 
