@@ -4,23 +4,23 @@ import NewsList from "@/components/news-list.js";
 
 import Link from "next/link.js";
 
-export default function FilteredNewsPage({ params }) {
+export default async function FilteredNewsPage({ params }) {
     const filter = params.filter; //array of segments
 
     const year = filter?.[0];
     const month = filter?.[1];
 
     let news;
-    let links = getAvailableNewsYears();
+    let links = await getAvailableNewsYears();
     let contentNews = 'No news found of the selected period.'
 
     if (year && !month) {
-        news = getNewsForYear(year);
+        news = await getNewsForYear(year);
         links = getAvailableNewsMonths(year);
     }
 
     if (month) {
-        news = getNewsForYearAndMonth(year, month);
+        news = await getNewsForYearAndMonth(year, month);
         links = [];
     }
 
@@ -28,8 +28,10 @@ export default function FilteredNewsPage({ params }) {
         contentNews = <NewsList news={news} />
     }
 
-    if ((year && !getAvailableNewsYears().includes(Number(year))) ||
-        (month && !getAvailableNewsMonths(year).includes(Number(month))) ||
+    const availableYears = await getAvailableNewsYears();
+    
+    if ((year && !availableYears.includes(year)) ||
+        (month && !getAvailableNewsMonths(year).includes(month)) ||
         (filter && filter.length > 2)) {
         throw new Error('Invalid path.');
     }

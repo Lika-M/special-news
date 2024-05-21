@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation.js";
 
-import { getAllNews } from "@/util/news.js";
+import { getNewsItem } from "@/util/news.js";
 
-export default function ImagePage({ params }) {
+export default async function ImagePage({ params }) {
     const newsItemSlug = params.slug;
-    const item = getAllNews().find(item => item.slug === newsItemSlug);
+    const item = await getNewsItem(newsItemSlug);
 
     if (!item) {
         notFound();
